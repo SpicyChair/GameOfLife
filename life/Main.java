@@ -1,4 +1,3 @@
-import java.util.Random;
 
 import model.*;
 
@@ -17,14 +16,14 @@ public class Main {
 
         while (true) {
             if (game.isPaused) {
-                sleep(500);
+                sleep(200);
             } else if (game.resetPressed) {
                 game.resetPressed = !game.resetPressed;
                 reset();
-                sleep(500);
+                sleep(game.speed);
             } else {
                 refresh();
-                sleep(500);
+                sleep(game.speed);
             }
         }
     }

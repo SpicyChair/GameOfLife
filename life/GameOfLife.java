@@ -1,4 +1,3 @@
-//package life;
 import model.*;
 import javax.swing.*;
 import java.awt.*;
@@ -8,19 +7,26 @@ public class GameOfLife extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
+    double DEFAULT_SPEED = 500;
+
+    int speed = 500;
+
     // the field where cells are
      JPanel field;
      //state of cells
      JPanel[][] cells;
 
      //contains stats and controls
+     JPanel statsControlContainer;
+
+     JPanel statsPanel;
      JPanel controlPanel;
      JLabel generationLabel;
      JLabel aliveLabel;
 
      JToggleButton pauseButton;
      JButton resetButton;
-     //JSlider speedSlider;
+     JSlider speedSlider;
      
      //flags for pause and reset
      boolean isPaused;
@@ -35,18 +41,23 @@ public class GameOfLife extends JFrame {
         setSize(912, 737);
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);
-        //setMinimumSize(getSize());
+        setResizable(false);
 
-
-
-        //initialise stats/control panel
+        //initialise control panel
 
         controlPanel  = new JPanel();
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
-        controlPanel.setPreferredSize(new Dimension(200,737));
+
         controlPanel.setBorder(BorderFactory.createCompoundBorder(
             controlPanel.getBorder(), 
-            BorderFactory.createEmptyBorder(10, 10, 10, 5)));  
+            BorderFactory.createEmptyBorder(10, 10, 10, 5)));
+            
+        
+        statsPanel  = new JPanel();
+        statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
+        statsPanel.setBorder(BorderFactory.createCompoundBorder(
+            statsPanel.getBorder(), 
+            BorderFactory.createEmptyBorder(10, 10, 10, 5))); 
         
         //intialise stats labels
 
@@ -58,24 +69,45 @@ public class GameOfLife extends JFrame {
         aliveLabel.setFont(new Font("Sans", Font.BOLD, 20));
         aliveLabel.setBounds(40, 20, 100, 30);
 
-        
-
-        //initialise reset and pause buttons
+        //initialise control buttons
 
         resetButton = new JButton("Reset");
         resetButton.setBounds(40, 20, 100, 50);
         resetButton.addActionListener(e -> resetPressed = !resetPressed);
 
         pauseButton = new JToggleButton("Pause / Unpause");
-        pauseButton.setBounds(40, 20, 100, 50);
+        pauseButton.setBounds(40, 20, 100, 100);
         pauseButton.addActionListener(e -> isPaused = !isPaused);
 
+        speedSlider = new JSlider(0, 1000, 500);
+        speedSlider.setMajorTickSpacing(250); 
+        speedSlider.setPaintTicks(true); 
+        speedSlider.setPaintLabels(true);
+        speedSlider.addChangeListener(e -> {
+                if (speedSlider.getValue() < 10) {
+                    this.speed = 10;
+                } else {
+                    this.speed = speedSlider.getValue();
+                }
+            }
+        ); 
+   
+
         //add stats / control panel
-        controlPanel.add(aliveLabel);
-        controlPanel.add(generationLabel);
+        statsPanel.add(aliveLabel);
+        statsPanel.add(generationLabel);
         //controlPanel.add(resetButton);
+        
         controlPanel.add(pauseButton);
-        add(controlPanel, BorderLayout.WEST);
+        controlPanel.add(new JLabel("Evolve every (ms):"));
+        controlPanel.add(speedSlider);
+
+        statsControlContainer = new JPanel();
+        statsControlContainer.setLayout(new BoxLayout(statsControlContainer, BoxLayout.Y_AXIS));
+        statsControlContainer.add(statsPanel);
+        statsControlContainer.add(controlPanel);
+
+        add(statsControlContainer, BorderLayout.WEST);
 
         //intialise field of cells
 
