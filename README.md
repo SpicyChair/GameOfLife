@@ -1,8 +1,5 @@
 # Game Of Life
-A Game Of Life simulation, written with SWING and Java.\
+A simulation of Conway's Game Of Life, written with SWING, Java and the MVC pattern.\
 \
-![gif](gameoflife.gif)
-\
-\
-For some odd reason, when downloading the repo zip, Chrome flags it as dangerous.\
-Use another browser or download the releases [here](https://github.com/SpicyChair/GameOfLife/releases)
+![gif](demo.gif)
+
