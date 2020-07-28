@@ -3,9 +3,7 @@ import model.*;
 
 public class Main {
 
-    //the size of the universe
-    //change this to whatever you want
-    final static int size = 40;
+    final static int size = 40; //dont change
     static Universe universe = new Universe(size);
     static GameOfLife game = new GameOfLife(size);
 

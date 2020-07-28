@@ -7,8 +7,6 @@ public class GameOfLife extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    double DEFAULT_SPEED = 500;
-
     int speed = 500;
 
     // the field where cells are
@@ -38,7 +36,7 @@ public class GameOfLife extends JFrame {
         //setting up JFrame
         super("Game Of Life");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(912, 737);
+        setSize(945, 737);
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);
         setResizable(false);
@@ -112,6 +110,7 @@ public class GameOfLife extends JFrame {
         //intialise field of cells
 
         field = new JPanel();
+        field.setPreferredSize(new Dimension(700, 700));
         add(field, BorderLayout.CENTER);
 
         this.size = size;
